@@ -1,1 +1,5 @@
-ubuntu@ec2-13-246-10-86.af-south-1.compute.amazonaws.com
+#1 Ubuntu instance
+ubuntu@ec2-13-245-180-23.af-south-1.compute.amazonaws.com
+
+#2 Centos instance
+centos@ec2-13-246-31-75.af-south-1.compute.amazonaws.com

@@ -1,19 +1,38 @@
 ---
-
 - hosts: all
   become: true
   tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
 
-  - name: update apt cache
-    apt:
-      update_cache: yes
+    - name: install nginx package
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_distribution == "Ubuntu"
 
-  - name: install nginx package
-    apt:
-      name: nginx
-      state: latest
+    - name: add php support for apache
+      apt:
+        name: libapache2-mod-php
+        state: latest
+      when: ansible_distribution == "Ubuntu"
 
-  - name: add php support for apache
-    apt:
-      name: libapache2-mod-php
-      state: latest
+    # Centos7
+    - name: update apt cache
+      yum:
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: install httpd package
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_distribution == "CentOS"
+
+    - name: add php support for apache
+      yum:
+        name: php
+        state: latest
+      when: ansible_distribution == "CentOS"
