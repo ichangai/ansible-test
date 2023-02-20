@@ -5,6 +5,7 @@
   
 # Ubuntu
     - name: update Ubuntu
+      tags: update always
       apt:
         name: 
           - nginx
@@ -15,6 +16,7 @@
 
 # Centos
     - name: update Centos
+      tags: update always
       yum:
         name: 
           - httpd
@@ -30,6 +32,7 @@
   tasks:
 
     - name: install nginx and php package
+      tags: nginx, php 
       apt:
         name: 
           - nginx
@@ -38,6 +41,7 @@
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
 
+
 # db_servers      
 
 - hosts: db_servers
@@ -45,11 +49,23 @@
   tasks:
 
     - name: install httpd and php package
+      tags: httpd (server), mariadb (database) 
       yum:
         name: 
           - httpd
-          - php
           - mariadb
         state: latest
         update_cache: yes
       when: ansible_distribution == "CentOS"
+
+    # files
+
+    - name: copy default html for site
+      tags: apache, apache2, httpd
+      copy:
+        src: default_site.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+      # when: ansible_distribution == "Ubuntu"
