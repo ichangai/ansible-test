@@ -13,6 +13,7 @@
         state: latest
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
+      
 
 # Centos
     - name: update Centos
@@ -25,6 +26,18 @@
         update_cache: yes
       when: ansible_distribution == "CentOS"
 
+    #playbook for adding users
+- hosts: all
+  become: true
+  tasks:
+  
+    - name: add user
+      tags: always
+      user:
+        name: mike
+        groups: root
+        
+        
  #web_servers     
 
 - hosts: web_servers
