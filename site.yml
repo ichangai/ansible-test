@@ -53,13 +53,21 @@
       yum:
         name: 
           - httpd
-          - mariadb
         state: latest
         update_cache: yes
       when: ansible_distribution == "CentOS"
 
-    # files
+    #playbook for managing services
+    - name: copy default html for site  
+      tags: apache, centos, httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"
 
+
+    #playbook for managing files
     - name: copy default html for site
       tags: apache, apache2, httpd
       copy:
