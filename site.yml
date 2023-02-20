@@ -2,20 +2,26 @@
 - hosts: all
   become: true
   tasks:
-
-# Centos
-    - name: install updates (Centos)
-      yum:
-        update_cache: yes
-        update_cache: yes
-      when: ansible_distribution == "CentOS"
-
+  
 # Ubuntu
-    - name: install updates (Ubuntu)
+    - name: update Ubuntu
       apt:
-        upgrade: dist
+        name: 
+          - nginx
+          - libapache2-mod-php
+        state: latest
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
+
+# Centos
+    - name: update Centos
+      yum:
+        name: 
+          - httpd
+          - php
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
 
  #web_servers     
 
@@ -43,6 +49,7 @@
         name: 
           - httpd
           - php
+          - mariadb
         state: latest
         update_cache: yes
       when: ansible_distribution == "CentOS"
